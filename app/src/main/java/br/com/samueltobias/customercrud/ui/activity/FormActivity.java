@@ -8,6 +8,8 @@ import android.widget.EditText;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Objects;
+
 import br.com.samueltobias.customercrud.R;
 import br.com.samueltobias.customercrud.dao.CustomerDAO;
 import br.com.samueltobias.customercrud.model.Customer;
@@ -23,6 +25,14 @@ public class FormActivity extends AppCompatActivity {
         final EditText nameEdit = findViewById(R.id.edit_name);
         final EditText phoneEdit = findViewById(R.id.edit_phone);
         Button button = findViewById(R.id.button_save);
+
+        if (getIntent().getExtras() != null) {
+            Customer customer = (Customer) getIntent().getExtras().get("customer");
+            if (customer != null) {
+                nameEdit.setText(customer.getName());
+                phoneEdit.setText(customer.getPhone());
+            }
+        }
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
