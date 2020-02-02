@@ -3,4 +3,7 @@
     <string name="name">Name</string>
     <string name="phone">Phone</string>
     <string name="save">Save</string>
+    <string name="facade">Facade</string>
+    <string name="time_window">Time Window</string>
+    <string name="add_customer">Add customer</string>
 </resources>
