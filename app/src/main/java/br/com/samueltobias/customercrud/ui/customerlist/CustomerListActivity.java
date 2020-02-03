@@ -45,6 +45,6 @@ public class CustomerListActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        recyclerView.setAdapter(new CustomerListAdapter(this, dao.getCustomers()));
+        // Notify Adapter
     }
 }
