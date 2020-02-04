@@ -11,6 +11,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.textfield.TextInputEditText;
+
+import java.util.Objects;
+
 import br.com.samueltobias.customercrud.R;
 import br.com.samueltobias.customercrud.dao.CustomerDAO;
 import br.com.samueltobias.customercrud.model.Customer;
@@ -18,8 +22,8 @@ import br.com.samueltobias.customercrud.ui.CustomerConstant;
 
 public class CustomerFormActivity extends AppCompatActivity implements CustomerConstant {
     private final CustomerDAO dao = new CustomerDAO();
-    private EditText nameEdit;
-    private EditText phoneEdit;
+    private TextInputEditText nameEdit;
+    private TextInputEditText phoneEdit;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

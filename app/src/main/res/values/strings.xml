@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CustomerCRUD</string>
+    <string name="app_name">Customer CRUD</string>
     <string name="name">Name</string>
     <string name="phone">Phone</string>
     <string name="save">Save</string>
