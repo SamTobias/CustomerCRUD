@@ -1,5 +1,6 @@
 package br.com.samueltobias.customercrud.ui.customerform;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,8 +14,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import br.com.samueltobias.customercrud.R;
 import br.com.samueltobias.customercrud.dao.CustomerDAO;
 import br.com.samueltobias.customercrud.model.Customer;
+import br.com.samueltobias.customercrud.ui.CustomerConstant;
 
-public class CustomerFormActivity extends AppCompatActivity {
+public class CustomerFormActivity extends AppCompatActivity implements CustomerConstant {
     private final CustomerDAO dao = new CustomerDAO();
     private EditText nameEdit;
     private EditText phoneEdit;
@@ -49,9 +51,10 @@ public class CustomerFormActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.customer_form_menu_save) {
-            dao.save(new Customer(nameEdit.getText().toString(), phoneEdit.getText().toString()));
+        Intent intent = new Intent().putExtra("customer", new Customer(nameEdit.getText().toString(), phoneEdit.getText().toString()));
 
+        if (item.getItemId() == R.id.customer_form_menu_save) {
+            setResult( CustomerConstant.CUSTUMER_ADD_RESULT_CODE, intent );
             finish();
         }
 

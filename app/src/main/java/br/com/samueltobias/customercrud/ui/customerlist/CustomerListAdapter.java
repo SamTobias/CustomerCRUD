@@ -40,6 +40,11 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
         return list.size();
     }
 
+    public void add(Customer customer) {
+        list.add(customer);
+        notifyDataSetChanged();
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView name;
 
