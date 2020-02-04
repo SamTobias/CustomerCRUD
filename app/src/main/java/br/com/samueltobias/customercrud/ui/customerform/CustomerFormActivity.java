@@ -10,14 +10,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.textfield.TextInputEditText;
+
+import java.util.Objects;
+
 import br.com.samueltobias.customercrud.R;
 import br.com.samueltobias.customercrud.dao.CustomerDAO;
 import br.com.samueltobias.customercrud.model.Customer;
 
 public class CustomerFormActivity extends AppCompatActivity {
     private final CustomerDAO dao = new CustomerDAO();
-    private EditText nameEdit;
-    private EditText phoneEdit;
+    private TextInputEditText nameEdit;
+    private TextInputEditText phoneEdit;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,7 +54,7 @@ public class CustomerFormActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.customer_form_menu_save) {
-            dao.save(new Customer(nameEdit.getText().toString(), phoneEdit.getText().toString()));
+            dao.save(new Customer(Objects.requireNonNull(nameEdit.getText()).toString(), Objects.requireNonNull(phoneEdit.getText()).toString()));
 
             finish();
         }
