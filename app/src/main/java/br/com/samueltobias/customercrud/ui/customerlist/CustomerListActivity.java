@@ -17,7 +17,6 @@ import br.com.samueltobias.customercrud.dao.CustomerDAO;
 import br.com.samueltobias.customercrud.model.Customer;
 import br.com.samueltobias.customercrud.ui.CustomerConstant;
 import br.com.samueltobias.customercrud.database.AppDatabase;
-import br.com.samueltobias.customercrud.model.Customer;
 import br.com.samueltobias.customercrud.ui.customerform.CustomerFormActivity;
 
 public class CustomerListActivity extends AppCompatActivity implements CustomerConstant {
@@ -44,7 +43,7 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerC
         if (requestCode == CUSTOMER_ADD_REQUEST_CODE && resultCode == CUSTUMER_ADD_RESULT_CODE && data != null && data.hasExtra("customer")) {
             Customer customer = (Customer) data.getExtras().get("customer");
 
-            dao.save(customer);
+            AppDatabase.getInstance(this).getCustomerDao().save(customer);
             adapter.add(customer);
         }
     }
@@ -63,14 +62,5 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerC
         customerList = AppDatabase.getInstance(this).getCustomerDao().getAll();
         adapter = new CustomerListAdapter(this, customerList);
         recyclerView.setAdapter(adapter);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        customerList = AppDatabase.getInstance(this).getCustomerDao().getAll();
-
-        adapter.notifyDataSetChanged();
     }
 }
