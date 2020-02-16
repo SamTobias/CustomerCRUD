@@ -9,8 +9,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
+import java.util.List;
+
 import br.com.samueltobias.customercrud.R;
 import br.com.samueltobias.customercrud.dao.CustomerDAO;
+import br.com.samueltobias.customercrud.database.AppDatabase;
+import br.com.samueltobias.customercrud.model.Customer;
 import br.com.samueltobias.customercrud.ui.customerform.CustomerFormActivity;
 
 public class CustomerListActivity extends AppCompatActivity {
@@ -19,6 +23,8 @@ public class CustomerListActivity extends AppCompatActivity {
 
     ExtendedFloatingActionButton fab;
     RecyclerView recyclerView;
+    private CustomerListAdapter adapter;
+    private List<Customer> customerList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,13 +44,18 @@ public class CustomerListActivity extends AppCompatActivity {
         });
 
         recyclerView = findViewById(R.id.customer_list_recycler_view);
-        recyclerView.setAdapter(new CustomerListAdapter(this, dao.getCustomers()));
+
+        customerList = AppDatabase.getInstance(this).getCustomerDao().getAll();
+        adapter = new CustomerListAdapter(this, customerList);
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        // Notify Adapter
+        customerList = AppDatabase.getInstance(this).getCustomerDao().getAll();
+
+        adapter.notifyDataSetChanged();
     }
 }

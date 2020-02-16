@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +15,7 @@ import java.util.Objects;
 
 import br.com.samueltobias.customercrud.R;
 import br.com.samueltobias.customercrud.dao.CustomerDAO;
+import br.com.samueltobias.customercrud.database.AppDatabase;
 import br.com.samueltobias.customercrud.model.Customer;
 
 public class CustomerFormActivity extends AppCompatActivity {
@@ -54,7 +54,7 @@ public class CustomerFormActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.customer_form_menu_save) {
-            dao.save(new Customer(Objects.requireNonNull(nameEdit.getText()).toString(), Objects.requireNonNull(phoneEdit.getText()).toString()));
+            AppDatabase.getInstance(this).getCustomerDao().save(new Customer(Objects.requireNonNull(nameEdit.getText()).toString(), Objects.requireNonNull(phoneEdit.getText()).toString()));
 
             finish();
         }
