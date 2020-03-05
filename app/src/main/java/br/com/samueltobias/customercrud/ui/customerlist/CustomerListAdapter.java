@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,6 +34,12 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
     @Override
     public void onBindViewHolder(@NonNull CustomerListAdapter.ViewHolder holder, int position) {
         holder.name.setText(list.get(position).getName());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "Test", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
@@ -45,7 +52,7 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
         notifyDataSetChanged();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
         TextView name;
 
         ViewHolder(@NonNull View itemView) {

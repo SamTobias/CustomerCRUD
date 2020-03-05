@@ -13,10 +13,10 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import br.com.samueltobias.customercrud.R;
 import br.com.samueltobias.customercrud.dao.CustomerDAO;
 import br.com.samueltobias.customercrud.model.Customer;
-import br.com.samueltobias.customercrud.ui.CustomerConstant;
+import br.com.samueltobias.customercrud.ui.CustomerActivityCommunication;
 import br.com.samueltobias.customercrud.ui.customerform.CustomerFormActivity;
 
-public class CustomerListActivity extends AppCompatActivity implements CustomerConstant {
+public class CustomerListActivity extends AppCompatActivity implements CustomerActivityCommunication {
 
     private final CustomerDAO dao = new CustomerDAO();
 
@@ -36,8 +36,8 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerC
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == CUSTOMER_ADD_REQUEST_CODE && resultCode == CUSTUMER_ADD_RESULT_CODE && data != null && data.hasExtra("customer")) {
-            Customer customer = (Customer) data.getExtras().get("customer");
+        if (requestCode == CUSTOMER_ADD_REQUEST_CODE && resultCode == CUSTUMER_ADD_RESULT_CODE && data != null && data.hasExtra(INTENT_EXTRA_CUSTOMER)) {
+            Customer customer = (Customer) data.getExtras().get(INTENT_EXTRA_CUSTOMER);
 
             dao.save(customer);
             adapter.add(customer);

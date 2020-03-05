@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,14 +12,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.util.Objects;
-
 import br.com.samueltobias.customercrud.R;
 import br.com.samueltobias.customercrud.dao.CustomerDAO;
 import br.com.samueltobias.customercrud.model.Customer;
-import br.com.samueltobias.customercrud.ui.CustomerConstant;
+import br.com.samueltobias.customercrud.ui.CustomerActivityCommunication;
 
-public class CustomerFormActivity extends AppCompatActivity implements CustomerConstant {
+public class CustomerFormActivity extends AppCompatActivity implements CustomerActivityCommunication {
     private final CustomerDAO dao = new CustomerDAO();
     private TextInputEditText nameEdit;
     private TextInputEditText phoneEdit;
@@ -33,7 +30,7 @@ public class CustomerFormActivity extends AppCompatActivity implements CustomerC
         initView();
 
         if (getIntent().getExtras() != null) {
-            Customer customer = (Customer) getIntent().getExtras().get("customer");
+            Customer customer = (Customer) getIntent().getExtras().get(INTENT_EXTRA_CUSTOMER);
             if (customer != null) {
                 nameEdit.setText(customer.getName());
                 phoneEdit.setText(customer.getPhone());
@@ -55,10 +52,10 @@ public class CustomerFormActivity extends AppCompatActivity implements CustomerC
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        Intent intent = new Intent().putExtra("customer", new Customer(nameEdit.getText().toString(), phoneEdit.getText().toString()));
+        Intent intent = new Intent().putExtra(INTENT_EXTRA_CUSTOMER, new Customer(nameEdit.getText().toString(), phoneEdit.getText().toString()));
 
         if (item.getItemId() == R.id.customer_form_menu_save) {
-            setResult( CustomerConstant.CUSTUMER_ADD_RESULT_CODE, intent );
+            setResult( CustomerActivityCommunication.CUSTUMER_ADD_RESULT_CODE, intent );
             finish();
         }
 
