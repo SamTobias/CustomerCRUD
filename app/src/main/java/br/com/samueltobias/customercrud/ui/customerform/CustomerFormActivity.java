@@ -13,12 +13,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.textfield.TextInputEditText;
 
 import br.com.samueltobias.customercrud.R;
-import br.com.samueltobias.customercrud.dao.CustomerDAO;
+import br.com.samueltobias.customercrud.repository.CustomerRepository;
 import br.com.samueltobias.customercrud.model.Customer;
 import br.com.samueltobias.customercrud.ui.CustomerActivityCommunication;
 
 public class CustomerFormActivity extends AppCompatActivity implements CustomerActivityCommunication {
-    private final CustomerDAO dao = new CustomerDAO();
+    private final CustomerRepository dao = new CustomerRepository();
     private TextInputEditText nameEdit;
     private TextInputEditText phoneEdit;
 
