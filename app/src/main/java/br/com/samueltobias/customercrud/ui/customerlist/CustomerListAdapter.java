@@ -49,7 +49,7 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
         return list.size();
     }
 
-    public void add(Customer customer) {
+    void add(Customer customer) {
         list.add(customer);
         notifyDataSetChanged();
     }

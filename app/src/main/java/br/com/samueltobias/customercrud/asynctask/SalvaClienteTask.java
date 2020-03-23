@@ -9,9 +9,9 @@ public class SalvaClienteTask extends AsyncTask<Void, Integer, Boolean> {
 
     private Customer customer;
     private CustomerDao dao;
-    private RetornoSalvamentoCliente listener;
+    private RetornoAcaoDao<Boolean> listener;
 
-    public SalvaClienteTask(Customer customer, CustomerDao dao, RetornoSalvamentoCliente listener) {
+    public SalvaClienteTask(Customer customer, CustomerDao dao, RetornoAcaoDao<Boolean> listener) {
         this.customer = customer;
         this.dao = dao;
         this.listener = listener;

@@ -14,7 +14,8 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import java.util.List;
 
 import br.com.samueltobias.customercrud.R;
-import br.com.samueltobias.customercrud.asynctask.RetornoSalvamentoCliente;
+import br.com.samueltobias.customercrud.asynctask.RetornoAcaoDao;
+import br.com.samueltobias.customercrud.database.dao.CustomerDao;
 import br.com.samueltobias.customercrud.repository.CustomerRepository;
 import br.com.samueltobias.customercrud.model.Customer;
 import br.com.samueltobias.customercrud.ui.CustomerActivityCommunication;
@@ -24,7 +25,7 @@ import br.com.samueltobias.customercrud.ui.customerform.CustomerFormActivity;
 
 public class CustomerListActivity extends AppCompatActivity implements CustomerActivityCommunication {
 
-    private final CustomerRepository dao = new CustomerRepository();
+    private CustomerRepository repository;
 
     ExtendedFloatingActionButton fab;
     RecyclerView recyclerView;
@@ -36,6 +37,9 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerA
         setContentView(R.layout.activity_customer_list);
         setTitle(getString(R.string.app_name));
         initView();
+
+        CustomerDao dao = AppDatabase.getInstance(this).getCustomerDao();
+        repository = new CustomerRepository(dao);
     }
 
     @Override
@@ -45,9 +49,9 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerA
         if (requestCode == CUSTOMER_ADD_REQUEST_CODE && resultCode == CUSTUMER_ADD_RESULT_CODE && data != null && data.hasExtra(INTENT_EXTRA_CUSTOMER)) {
             final Customer customer = (Customer) data.getExtras().get(INTENT_EXTRA_CUSTOMER);
 
-            dao.save(this, customer, new RetornoSalvamentoCliente() {
+            repository.save(customer, new RetornoAcaoDao<Boolean>() {
                 @Override
-                public void quandoTermina(boolean sucesso) {
+                public void quandoTermina(Boolean sucesso) {
                     if (sucesso) {
                         AppDatabase.getInstance(CustomerListActivity.this).getCustomerDao().save(customer);
                         adapter.add(customer);
@@ -68,13 +72,17 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerA
 
         recyclerView = findViewById(R.id.customer_list_recycler_view);
 
-        List<Customer> customerList = AppDatabase.getInstance(this).getCustomerDao().getAll();
-        adapter = new CustomerListAdapter(this, customerList, new OnClickListener() {
+        repository.getClientes(new RetornoAcaoDao<List<Customer>>() {
             @Override
-            public void quandoClicar(int posicao) {
-                Toast.makeText(CustomerListActivity.this, "", Toast.LENGTH_LONG).show();
+            public void quandoTermina(List<Customer> customerList) {
+                adapter = new CustomerListAdapter(CustomerListActivity.this, customerList, new OnClickListener() {
+                    @Override
+                    public void quandoClicar(int posicao) {
+                        Toast.makeText(CustomerListActivity.this, "Editar", Toast.LENGTH_LONG).show();
+                    }
+                });
+                recyclerView.setAdapter(adapter);
             }
         });
-        recyclerView.setAdapter(adapter);
     }
 }
