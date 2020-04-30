@@ -39,7 +39,7 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.quandoClicar(position);
+                listener.onClick(position);
             }
         });
     }

@@ -5,13 +5,13 @@ import android.os.AsyncTask;
 import br.com.samueltobias.customercrud.database.dao.CustomerDao;
 import br.com.samueltobias.customercrud.model.Customer;
 
-public class SalvaClienteTask extends AsyncTask<Void, Integer, Boolean> {
+public class SaveCustomerTask extends AsyncTask<Void, Integer, Boolean> {
 
     private Customer customer;
     private CustomerDao dao;
-    private RetornoAcaoDao<Boolean> listener;
+    private Callback<Boolean> listener;
 
-    public SalvaClienteTask(Customer customer, CustomerDao dao, RetornoAcaoDao<Boolean> listener) {
+    public SaveCustomerTask(Customer customer, CustomerDao dao, Callback<Boolean> listener) {
         this.customer = customer;
         this.dao = dao;
         this.listener = listener;
@@ -31,6 +31,6 @@ public class SalvaClienteTask extends AsyncTask<Void, Integer, Boolean> {
     protected void onPostExecute(Boolean aBoolean) {
         super.onPostExecute(aBoolean);
 
-        listener.quandoTermina(aBoolean);
+        listener.onFinish(aBoolean);
     }
 }

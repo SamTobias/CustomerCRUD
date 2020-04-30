@@ -7,13 +7,13 @@ import java.util.List;
 import br.com.samueltobias.customercrud.database.dao.CustomerDao;
 import br.com.samueltobias.customercrud.model.Customer;
 
-public class BuscaClientesTask extends AsyncTask<Void, Void, List<Customer>> {
+public class FetchCustomersTask extends AsyncTask<Void, Void, List<Customer>> {
     private CustomerDao customerDao;
-    private RetornoAcaoDao<List<Customer>> callbackRetorno;
+    private Callback<List<Customer>> callback;
 
-    public BuscaClientesTask(CustomerDao customerDao, RetornoAcaoDao<List<Customer>> callbackRetorno) {
+    public FetchCustomersTask(CustomerDao customerDao, Callback<List<Customer>> callback) {
         this.customerDao = customerDao;
-        this.callbackRetorno = callbackRetorno;
+        this.callback = callback;
     }
 
     @Override
@@ -25,6 +25,6 @@ public class BuscaClientesTask extends AsyncTask<Void, Void, List<Customer>> {
     protected void onPostExecute(List<Customer> customers) {
         super.onPostExecute(customers);
 
-        callbackRetorno.quandoTermina(customers);
+        callback.onFinish(customers);
     }
 }
