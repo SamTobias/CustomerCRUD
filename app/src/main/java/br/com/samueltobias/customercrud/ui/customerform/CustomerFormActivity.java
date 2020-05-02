@@ -28,7 +28,7 @@ public class CustomerFormActivity extends AppCompatActivity implements CustomerA
         initView();
 
         if (getIntent().getExtras() != null) {
-            Customer customer = (Customer) getIntent().getExtras().get(INTENT_EXTRA_CUSTOMER);
+            Customer customer = (Customer) getIntent().getExtras().get(INTENT_EXTRA_CUSTOMER_SERIALIZED);
             if (customer != null) {
                 nameEdit.setText(customer.getName());
                 phoneEdit.setText(customer.getPhone());
@@ -50,7 +50,7 @@ public class CustomerFormActivity extends AppCompatActivity implements CustomerA
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        Intent intent = new Intent().putExtra(INTENT_EXTRA_CUSTOMER, new Customer(nameEdit.getText().toString(), phoneEdit.getText().toString()));
+        Intent intent = new Intent().putExtra(INTENT_EXTRA_CUSTOMER_SERIALIZED, new Customer(nameEdit.getText().toString(), phoneEdit.getText().toString()));
 
         if (item.getItemId() == R.id.customer_form_menu_save) {
             setResult( CustomerActivityCommunication.CUSTUMER_ADD_RESULT_CODE, intent );

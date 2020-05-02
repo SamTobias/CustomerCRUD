@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.samueltobias.customercrud.R;
@@ -18,12 +19,11 @@ import br.com.samueltobias.customercrud.ui.OnClickListener;
 public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapter.ViewHolder> {
 
     private final Context context;
-    private final List<Customer> list;
+    private List<Customer> customers = new ArrayList<>();
     private OnClickListener listener;
 
-    CustomerListAdapter(Context context, List<Customer> list, OnClickListener listener) {
+    CustomerListAdapter(Context context, OnClickListener listener) {
         this.context = context;
-        this.list = list;
         this.listener = listener;
     }
 
@@ -35,7 +35,7 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
 
     @Override
     public void onBindViewHolder(@NonNull CustomerListAdapter.ViewHolder holder, final int position) {
-        holder.name.setText(list.get(position).getName());
+        holder.name.setText(customers.get(position).getName());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,12 +46,21 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return customers.size();
+    }
+
+    void setCustomers(List<Customer> customers) {
+        this.customers = customers;
+        notifyDataSetChanged();
     }
 
     void add(Customer customer) {
-        list.add(customer);
+        customers.add(customer);
         notifyDataSetChanged();
+    }
+
+    List<Customer> getCustomers() {
+        return customers;
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

@@ -3,7 +3,6 @@ package br.com.samueltobias.customercrud.ui.customerlist;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,12 +14,11 @@ import java.util.List;
 
 import br.com.samueltobias.customercrud.R;
 import br.com.samueltobias.customercrud.asynctask.Callback;
-import br.com.samueltobias.customercrud.database.dao.CustomerDao;
-import br.com.samueltobias.customercrud.repository.CustomerRepository;
+import br.com.samueltobias.customercrud.database.AppDatabase;
 import br.com.samueltobias.customercrud.model.Customer;
+import br.com.samueltobias.customercrud.repository.CustomerRepository;
 import br.com.samueltobias.customercrud.ui.CustomerActivityCommunication;
 import br.com.samueltobias.customercrud.ui.OnClickListener;
-import br.com.samueltobias.customercrud.database.AppDatabase;
 import br.com.samueltobias.customercrud.ui.customerform.CustomerFormActivity;
 
 public class CustomerListActivity extends AppCompatActivity implements CustomerActivityCommunication {
@@ -39,15 +37,39 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerA
 
         repository = new CustomerRepository(AppDatabase.getInstance(this).getCustomerDao());
 
-        initView();
+        setupFabButton();
+        setupList();
+        fetchCustomers();
+    }
+
+    private void fetchCustomers() {
+        repository.getCustomers(new Callback<List<Customer>>() {
+            @Override
+            public void onFinish(final List<Customer> customers) {
+                adapter.setCustomers(customers);
+            }
+        });
+    }
+
+    private void setupList() {
+        recyclerView = findViewById(R.id.customer_list_recycler_view);
+        adapter = new CustomerListAdapter(CustomerListActivity.this, new OnClickListener() {
+            @Override
+            public void onClick(int position) {
+                Intent intent = new Intent(CustomerListActivity.this, CustomerFormActivity.class);
+                intent.putExtra(INTENT_EXTRA_CUSTOMER_SERIALIZED, adapter.getCustomers().get(position));
+                startActivityForResult(intent, CUSTOMER_EDIT_REQUEST_CODE);
+            }
+        });
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == CUSTOMER_ADD_REQUEST_CODE && resultCode == CUSTUMER_ADD_RESULT_CODE && data != null && data.hasExtra(INTENT_EXTRA_CUSTOMER)) {
-            final Customer customer = (Customer) data.getExtras().get(INTENT_EXTRA_CUSTOMER);
+        if (requestCode == CUSTOMER_ADD_REQUEST_CODE && resultCode == CUSTUMER_ADD_RESULT_CODE && data != null && data.hasExtra(INTENT_EXTRA_CUSTOMER_SERIALIZED)) {
+            final Customer customer = (Customer) data.getExtras().get(INTENT_EXTRA_CUSTOMER_SERIALIZED);
 
             repository.save(customer, new Callback<Boolean>() {
                 @Override
@@ -60,27 +82,12 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerA
         }
     }
 
-    private void initView() {
+    private void setupFabButton() {
         fab = findViewById(R.id.customer_list_fab_add);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivityForResult(new Intent(CustomerListActivity.this, CustomerFormActivity.class), CUSTOMER_ADD_REQUEST_CODE);
-            }
-        });
-
-        recyclerView = findViewById(R.id.customer_list_recycler_view);
-
-        repository.getCustomers(new Callback<List<Customer>>() {
-            @Override
-            public void onFinish(List<Customer> customers) {
-                adapter = new CustomerListAdapter(CustomerListActivity.this, customers, new OnClickListener() {
-                    @Override
-                    public void onClick(int position) {
-                        Toast.makeText(CustomerListActivity.this, "Editar", Toast.LENGTH_LONG).show();
-                    }
-                });
-                recyclerView.setAdapter(adapter);
             }
         });
     }
