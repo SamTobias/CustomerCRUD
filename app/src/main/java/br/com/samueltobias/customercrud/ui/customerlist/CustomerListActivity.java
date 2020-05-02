@@ -24,10 +24,7 @@ import br.com.samueltobias.customercrud.ui.customerform.CustomerFormActivity;
 public class CustomerListActivity extends AppCompatActivity implements CustomerActivityCommunication {
 
     private CustomerRepository repository;
-
-    ExtendedFloatingActionButton fab;
-    RecyclerView recyclerView;
-    private CustomerListAdapter adapter;
+    private CustomerListAdapter customerListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,22 +43,22 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerA
         repository.getCustomers(new Callback<List<Customer>>() {
             @Override
             public void onFinish(final List<Customer> customers) {
-                adapter.setCustomers(customers);
+                customerListAdapter.setCustomers(customers);
             }
         });
     }
 
     private void setupList() {
-        recyclerView = findViewById(R.id.customer_list_recycler_view);
-        adapter = new CustomerListAdapter(CustomerListActivity.this, new OnClickListener() {
+        RecyclerView recyclerView = findViewById(R.id.customer_list_recycler_view);
+        customerListAdapter = new CustomerListAdapter(CustomerListActivity.this, new OnClickListener() {
             @Override
             public void onClick(int position) {
                 Intent intent = new Intent(CustomerListActivity.this, CustomerFormActivity.class);
-                intent.putExtra(INTENT_EXTRA_CUSTOMER_SERIALIZED, adapter.getCustomers().get(position));
+                intent.putExtra(INTENT_EXTRA_CUSTOMER_SERIALIZED, customerListAdapter.getCustomers().get(position));
                 startActivityForResult(intent, CUSTOMER_EDIT_REQUEST_CODE);
             }
         });
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(customerListAdapter);
     }
 
     @Override
@@ -75,7 +72,7 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerA
                 @Override
                 public void onFinish(Boolean success) {
                     if (success) {
-                        adapter.add(customer);
+                        customerListAdapter.add(customer);
                     }
                 }
             });
@@ -83,8 +80,8 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerA
     }
 
     private void setupFabButton() {
-        fab = findViewById(R.id.customer_list_fab_add);
-        fab.setOnClickListener(new View.OnClickListener() {
+        ExtendedFloatingActionButton floatingActionButton = findViewById(R.id.customer_list_fab_add);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivityForResult(new Intent(CustomerListActivity.this, CustomerFormActivity.class), CUSTOMER_ADD_REQUEST_CODE);

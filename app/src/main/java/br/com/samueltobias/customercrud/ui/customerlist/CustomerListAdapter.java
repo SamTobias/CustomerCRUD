@@ -20,11 +20,11 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
 
     private final Context context;
     private List<Customer> customers = new ArrayList<>();
-    private OnClickListener listener;
+    private OnClickListener clickListener;
 
-    CustomerListAdapter(Context context, OnClickListener listener) {
+    CustomerListAdapter(Context context, OnClickListener clickListener) {
         this.context = context;
-        this.listener = listener;
+        this.clickListener = clickListener;
     }
 
     @NonNull
@@ -35,11 +35,11 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
 
     @Override
     public void onBindViewHolder(@NonNull CustomerListAdapter.ViewHolder holder, final int position) {
-        holder.name.setText(customers.get(position).getName());
+        holder.customerName.setText(customers.get(position).getName());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onClick(position);
+                clickListener.onClick(position);
             }
         });
     }
@@ -64,12 +64,12 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView name;
+        TextView customerName;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            name = itemView.findViewById(R.id.customer_list_customer_name);
+            customerName = itemView.findViewById(R.id.customer_list_customer_name);
         }
     }
 }
