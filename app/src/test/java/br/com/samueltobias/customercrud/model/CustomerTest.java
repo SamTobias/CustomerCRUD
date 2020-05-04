@@ -3,8 +3,6 @@ package br.com.samueltobias.customercrud.model;
 import org.junit.Assert;
 import org.junit.Test;
 
-import br.com.samueltobias.customercrud.model.Customer;
-
 public class CustomerTest {
 
     @Test
