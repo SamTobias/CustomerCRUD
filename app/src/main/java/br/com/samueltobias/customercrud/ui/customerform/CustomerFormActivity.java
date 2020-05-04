@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -50,13 +51,26 @@ public class CustomerFormActivity extends AppCompatActivity implements CustomerA
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        Intent intent = new Intent().putExtra(INTENT_EXTRA_CUSTOMER_SERIALIZED, new Customer(nameEdit.getText().toString(), phoneEdit.getText().toString()));
-
         if (item.getItemId() == R.id.customer_form_menu_save) {
-            setResult( CustomerActivityCommunication.CUSTUMER_ADD_RESULT_CODE, intent );
-            finish();
+            saveCustomer();
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void saveCustomer() {
+        String name  = nameEdit.getText() != null ? nameEdit.getText().toString() : null;
+        String phone = phoneEdit.getText() != null ? phoneEdit.getText().toString() : null;
+
+        Customer customer = new Customer(name, phone);
+
+        if (!customer.isValid()) {
+            Toast.makeText(this, R.string.invalid_customer, Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        Intent intent = new Intent().putExtra(INTENT_EXTRA_CUSTOMER_SERIALIZED, customer);
+        setResult( CustomerActivityCommunication.CUSTUMER_ADD_RESULT_CODE, intent );
+        finish();
     }
 }

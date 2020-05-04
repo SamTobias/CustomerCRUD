@@ -54,4 +54,16 @@ public class Customer implements Serializable {
     public String toString() {
         return name;
     }
+
+    public boolean isValid() {
+        if (name == null || name.isEmpty()) {
+            return false;
+        }
+
+        if (phone == null || phone.isEmpty()) {
+            return false;
+        }
+
+        return true;
+    }
 }
