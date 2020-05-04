@@ -59,16 +59,24 @@ public class CustomerFormActivity extends AppCompatActivity implements CustomerA
     }
 
     private void saveCustomer() {
-        String name  = nameEdit.getText() != null ? nameEdit.getText().toString() : null;
-        String phone = phoneEdit.getText() != null ? phoneEdit.getText().toString() : null;
-
-        Customer customer = new Customer(name, phone);
+        Customer customer = populateCustomer();
 
         if (!customer.isValid()) {
             Toast.makeText(this, R.string.invalid_customer, Toast.LENGTH_LONG).show();
             return;
         }
 
+        redirectToList(customer);
+    }
+
+    private Customer populateCustomer() {
+        String name  = nameEdit.getText() != null ? nameEdit.getText().toString() : null;
+        String phone = phoneEdit.getText() != null ? phoneEdit.getText().toString() : null;
+
+        return new Customer(name, phone);
+    }
+
+    private void redirectToList(Customer customer) {
         Intent intent = new Intent().putExtra(INTENT_EXTRA_CUSTOMER_SERIALIZED, customer);
         setResult( CustomerActivityCommunication.CUSTUMER_ADD_RESULT_CODE, intent );
         finish();
