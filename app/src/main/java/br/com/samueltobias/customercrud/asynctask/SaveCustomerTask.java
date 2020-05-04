@@ -8,19 +8,19 @@ import br.com.samueltobias.customercrud.model.Customer;
 public class SaveCustomerTask extends AsyncTask<Void, Integer, Boolean> {
 
     private Customer customer;
-    private CustomerDao dao;
+    private CustomerDao customerDao;
     private Callback<Boolean> listener;
 
-    public SaveCustomerTask(Customer customer, CustomerDao dao, Callback<Boolean> listener) {
+    public SaveCustomerTask(Customer customer, CustomerDao customerDao, Callback<Boolean> listener) {
         this.customer = customer;
-        this.dao = dao;
+        this.customerDao = customerDao;
         this.listener = listener;
     }
 
     @Override
     protected Boolean doInBackground(Void... voids) {
         try {
-            dao.save(customer);
+            customerDao.save(customer);
             return true;
         } catch (Exception e) {
             return false;
