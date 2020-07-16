@@ -13,18 +13,16 @@ import br.com.samueltobias.customercrud.ui.CustomerActivityCommunication
 import com.google.android.material.textfield.TextInputEditText
 
 class CustomerFormActivity : AppCompatActivity(), CustomerActivityCommunication {
-    private var nameEdit: TextInputEditText? = null
-    private var phoneEdit: TextInputEditText? = null
+    private lateinit var nameEdit: TextInputEditText
+    private lateinit var phoneEdit: TextInputEditText
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_customer_form)
         initView()
-        if (intent.extras != null) {
-            val customer = intent.extras[CustomerActivityCommunication.INTENT_EXTRA_CUSTOMER_SERIALIZED] as Customer
-            if (customer != null) {
-                nameEdit!!.setText(customer.name)
-                phoneEdit!!.setText(customer.phone)
-            }
+        intent.extras?.let {
+            val customer = it.getSerializable(CustomerActivityCommunication.INTENT_EXTRA_CUSTOMER_SERIALIZED) as Customer
+            nameEdit.setText(customer.name)
+            phoneEdit.setText(customer.phone)
         }
     }
 
@@ -55,8 +53,8 @@ class CustomerFormActivity : AppCompatActivity(), CustomerActivityCommunication 
     }
 
     private fun populateCustomer(): Customer {
-        val name = if (nameEdit!!.text != null) nameEdit!!.text.toString() else null
-        val phone = if (phoneEdit!!.text != null) phoneEdit!!.text.toString() else null
+        val name = nameEdit.text?.toString()
+        val phone = phoneEdit.text?.toString()
         return Customer(name, phone)
     }
 
