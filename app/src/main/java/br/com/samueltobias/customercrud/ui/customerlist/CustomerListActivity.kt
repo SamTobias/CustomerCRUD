@@ -50,14 +50,16 @@ class CustomerListActivity : AppCompatActivity(), CustomerActivityCommunication 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == CustomerActivityCommunication.CUSTOMER_ADD_REQUEST_CODE && resultCode == CustomerActivityCommunication.CUSTUMER_ADD_RESULT_CODE && data != null && data.hasExtra(CustomerActivityCommunication.INTENT_EXTRA_CUSTOMER_SERIALIZED)) {
-            val customer = data.extras[CustomerActivityCommunication.INTENT_EXTRA_CUSTOMER_SERIALIZED] as Customer
-            repository!!.save(customer, object : Callback<Boolean> {
-                override fun onFinish(success: Boolean) {
-                    if (success) {
-                        customerListAdapter!!.add(customer)
+            intent.extras?.let {
+                val customer = it.getSerializable(CustomerActivityCommunication.INTENT_EXTRA_CUSTOMER_SERIALIZED) as Customer
+                repository!!.save(customer, object : Callback<Boolean> {
+                    override fun onFinish(success: Boolean) {
+                        if (success) {
+                            customerListAdapter!!.add(customer)
+                        }
                     }
-                }
-            })
+                })
+            }
         }
     }
 
