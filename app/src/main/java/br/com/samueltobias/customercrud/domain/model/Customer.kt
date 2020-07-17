@@ -1,26 +1,16 @@
 package br.com.samueltobias.customercrud.domain.model
 
 import androidx.room.Entity
-import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import java.io.Serializable
 
 @Entity
-class Customer() : Serializable {
-    @PrimaryKey(autoGenerate = true)
-    var id: Long = 0
-    var name: String? = null
-    var phone: String? = null
-
-    @Ignore
-    constructor(name: String?, phone: String?) : this() {
-        this.name = name
-        this.phone = phone
-    }
-
-    override fun toString(): String {
-        return name!!
-    }
+data class Customer(
+        @PrimaryKey(autoGenerate = true)
+        val id: Long,
+        var name: String?,
+        var phone: String?
+) : Serializable {
 
     val isValid: Boolean
         get() {

@@ -79,8 +79,10 @@ class CustomerListActivity : AppCompatActivity(), CustomerActivityCommunication 
         repository.save(customer, object : Callback<Boolean> {
             override fun onFinish(success: Boolean) {
                 if (success) {
-                    print("Inserted")
-                    customerListAdapter.add(customer)
+                    println("Inserted")
+                    fetchCustomers()
+                } else {
+                    println("Not Inserted")
                 }
             }
         })
@@ -89,7 +91,12 @@ class CustomerListActivity : AppCompatActivity(), CustomerActivityCommunication 
     private fun updateCustomer(customer: Customer) {
         repository.update(customer, object : Callback<Boolean> {
             override fun onFinish(success: Boolean) {
-                if (success) print("Updated")
+                if (success) {
+                    println("Updated")
+                    fetchCustomers()
+                } else {
+                    println("Not Updated")
+                }
             }
         })
     }

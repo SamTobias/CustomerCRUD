@@ -14,6 +14,7 @@ import com.google.android.material.textfield.TextInputEditText
 class CustomerFormActivity : AppCompatActivity(), CustomerActivityCommunication {
     private lateinit var nameEdit: TextInputEditText
     private lateinit var phoneEdit: TextInputEditText
+    private var customerId = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,6 +22,7 @@ class CustomerFormActivity : AppCompatActivity(), CustomerActivityCommunication 
         initView()
         intent.extras?.let {
             val customer = it.getSerializable(CustomerActivityCommunication.INTENT_EXTRA_CUSTOMER_SERIALIZED) as Customer
+            customerId = customer.id
             nameEdit.setText(customer.name)
             phoneEdit.setText(customer.phone)
         }
@@ -55,7 +57,7 @@ class CustomerFormActivity : AppCompatActivity(), CustomerActivityCommunication 
     private fun populateCustomer(): Customer {
         val name = nameEdit.text?.toString()
         val phone = phoneEdit.text?.toString()
-        return Customer(name, phone)
+        return Customer(customerId, name, phone)
     }
 
     private fun redirectToList(customer: Customer) {

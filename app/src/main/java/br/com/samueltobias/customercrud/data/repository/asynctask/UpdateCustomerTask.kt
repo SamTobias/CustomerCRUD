@@ -11,8 +11,8 @@ class UpdateCustomerTask(
 ) : AsyncTask<Void?, Int?, Boolean>() {
     override fun doInBackground(vararg voids: Void?): Boolean {
         return try {
-            customerDao.update(customer)
-            true
+            val result = customerDao.update(customer)
+            result == 1
         } catch (e: Exception) {
             false
         }
