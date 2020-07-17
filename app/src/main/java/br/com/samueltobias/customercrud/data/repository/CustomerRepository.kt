@@ -3,6 +3,7 @@ package br.com.samueltobias.customercrud.data.repository
 import br.com.samueltobias.customercrud.data.repository.asynctask.Callback
 import br.com.samueltobias.customercrud.data.repository.asynctask.SaveCustomerTask
 import br.com.samueltobias.customercrud.data.database.dao.CustomerDao
+import br.com.samueltobias.customercrud.data.repository.asynctask.FetchCustomersTask
 import br.com.samueltobias.customercrud.data.repository.asynctask.UpdateCustomerTask
 import br.com.samueltobias.customercrud.domain.model.Customer
 import kotlinx.coroutines.Dispatchers
@@ -17,7 +18,7 @@ class CustomerRepository(private val customerDao: CustomerDao) {
         UpdateCustomerTask(customer, customerDao, callback).execute()
     }
 
-    suspend fun getCustomers(): List<Customer> = withContext(Dispatchers.IO) {
-        customerDao.getAll()
+    fun getCustomers(callback: Callback<List<Customer>>) {
+        FetchCustomersTask(customerDao, callback).execute()
     }
 }

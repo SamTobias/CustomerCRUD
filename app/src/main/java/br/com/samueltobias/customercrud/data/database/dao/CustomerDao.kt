@@ -12,7 +12,7 @@ interface CustomerDao {
     fun update(customer: Customer) : Int
 
     @Query(value = "SELECT * FROM customer")
-    suspend fun getAll(): List<Customer>
+    fun getAll(): List<Customer>
 
     @Query(value = "SELECT * FROM customer WHERE id = :id")
     fun get(id: Long): Customer?

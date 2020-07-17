@@ -39,14 +39,12 @@ class CustomerListActivity : AppCompatActivity(), CustomerActivityCommunication 
     }
 
     private fun fetchCustomers() {
-        lifecycleScope.launch {
-            println("Iniciando busca")
-            val customers = repository.getCustomers()
-            println("Setando ${customers.size ?: 0} customers no adapter")
-            customerListAdapter.setCustomers(customers)
-            println("Lista populada!")
-        }
-        println("Fim do método")
+        repository.getCustomers(object : Callback<List<Customer>> {
+            override fun onFinish(customers: List<Customer>) {
+                customerListAdapter.setCustomers(customers)
+            }
+
+        })
     }
 
     private fun setupList() {
