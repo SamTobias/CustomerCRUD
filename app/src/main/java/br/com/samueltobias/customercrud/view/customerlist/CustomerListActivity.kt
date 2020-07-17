@@ -64,10 +64,13 @@ class CustomerListActivity : AppCompatActivity(), CustomerActivityCommunication 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if ((requestCode == CustomerActivityCommunication.CUSTOMER_ADD_REQUEST_CODE && resultCode == CustomerActivityCommunication.CUSTUMER_ADD_RESULT_CODE) || (requestCode == CustomerActivityCommunication.CUSTOMER_EDIT_REQUEST_CODE && resultCode == CustomerActivityCommunication.CUSTUMER_EDIT_RESULT_CODE)) {
+        if (resultCode == CustomerActivityCommunication.CUSTOMER_SUCCESS_RESULT_CODE) {
             data?.extras?.let {
                 val customer = it.getSerializable(CustomerActivityCommunication.INTENT_EXTRA_CUSTOMER_SERIALIZED) as Customer
-                saveCustomer(customer)
+                when (requestCode) {
+                    CustomerActivityCommunication.CUSTOMER_ADD_REQUEST_CODE -> saveCustomer(customer)
+                    CustomerActivityCommunication.CUSTOMER_EDIT_REQUEST_CODE -> updateCustomer(customer)
+                }
             }
         }
     }
@@ -76,8 +79,17 @@ class CustomerListActivity : AppCompatActivity(), CustomerActivityCommunication 
         repository.save(customer, object : Callback<Boolean> {
             override fun onFinish(success: Boolean) {
                 if (success) {
+                    print("Inserted")
                     customerListAdapter.add(customer)
                 }
+            }
+        })
+    }
+
+    private fun updateCustomer(customer: Customer) {
+        repository.update(customer, object : Callback<Boolean> {
+            override fun onFinish(success: Boolean) {
+                if (success) print("Updated")
             }
         })
     }

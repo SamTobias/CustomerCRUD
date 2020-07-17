@@ -1,6 +1,5 @@
 package br.com.samueltobias.customercrud.view.customerform
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -15,6 +14,7 @@ import com.google.android.material.textfield.TextInputEditText
 class CustomerFormActivity : AppCompatActivity(), CustomerActivityCommunication {
     private lateinit var nameEdit: TextInputEditText
     private lateinit var phoneEdit: TextInputEditText
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_customer_form)
@@ -60,7 +60,7 @@ class CustomerFormActivity : AppCompatActivity(), CustomerActivityCommunication 
 
     private fun redirectToList(customer: Customer) {
         val intent = intent.putExtra(CustomerActivityCommunication.INTENT_EXTRA_CUSTOMER_SERIALIZED, customer)
-        setResult(CustomerActivityCommunication.CUSTUMER_ADD_RESULT_CODE, intent)
+        setResult(CustomerActivityCommunication.CUSTOMER_SUCCESS_RESULT_CODE, intent)
         finish()
     }
 }
