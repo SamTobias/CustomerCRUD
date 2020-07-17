@@ -6,13 +6,13 @@ import org.junit.Test
 class CustomerTest {
     @Test
     fun shouldReturnValidCustomer_WhenFillingAllFields() {
-        val customer = Customer("Mercado XPTO", "99999-9999")
+        val customer = Customer(1, "Mercado XPTO", "99999-9999")
         Assert.assertTrue(customer.isValid)
     }
 
     @Test
     fun shouldReturnInvalidCustomer_WhenAllFieldsAreEmpty() {
-        val customer = Customer("", "")
+        val customer = Customer(1, "", "")
         Assert.assertFalse(customer.isValid)
     }
 }

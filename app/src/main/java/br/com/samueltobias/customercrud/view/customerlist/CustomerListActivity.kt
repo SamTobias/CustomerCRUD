@@ -14,6 +14,7 @@ import br.com.samueltobias.customercrud.view.CustomerActivityCommunication
 import br.com.samueltobias.customercrud.view.OnClickListener
 import br.com.samueltobias.customercrud.view.customerform.CustomerFormActivity
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class CustomerListActivity : AppCompatActivity(), CustomerActivityCommunication {
@@ -39,12 +40,10 @@ class CustomerListActivity : AppCompatActivity(), CustomerActivityCommunication 
     }
 
     private fun fetchCustomers() {
-        repository.getCustomers(object : Callback<List<Customer>> {
-            override fun onFinish(customers: List<Customer>) {
-                customerListAdapter.setCustomers(customers)
-            }
-
-        })
+        lifecycleScope.launch {
+            val customers = repository.getCustomers()
+            customerListAdapter.setCustomers(customers)
+        }
     }
 
     private fun setupList() {
