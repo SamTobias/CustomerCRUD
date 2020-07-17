@@ -1,8 +1,8 @@
-package br.com.samueltobias.customercrud.asynctask
+package br.com.samueltobias.customercrud.data.repository.asynctask
 
 import android.os.AsyncTask
-import br.com.samueltobias.customercrud.database.dao.CustomerDao
-import br.com.samueltobias.customercrud.model.Customer
+import br.com.samueltobias.customercrud.data.database.dao.CustomerDao
+import br.com.samueltobias.customercrud.domain.model.Customer
 
 class SaveCustomerTask(
         private val customer: Customer,
@@ -22,5 +22,4 @@ class SaveCustomerTask(
         super.onPostExecute(aBoolean)
         listener.onFinish(aBoolean)
     }
-
 }

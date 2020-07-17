@@ -1,4 +1,4 @@
-package br.com.samueltobias.customercrud.ui.customerlist
+package br.com.samueltobias.customercrud.view.customerlist
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.com.samueltobias.customercrud.R
-import br.com.samueltobias.customercrud.model.Customer
-import br.com.samueltobias.customercrud.ui.OnClickListener
+import br.com.samueltobias.customercrud.domain.model.Customer
+import br.com.samueltobias.customercrud.view.OnClickListener
 import java.util.*
 
 class CustomerListAdapter internal constructor(

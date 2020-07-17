@@ -1,4 +1,4 @@
-package br.com.samueltobias.customercrud.ui.customerform
+package br.com.samueltobias.customercrud.view.customerform
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,8 +8,8 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import br.com.samueltobias.customercrud.R
-import br.com.samueltobias.customercrud.model.Customer
-import br.com.samueltobias.customercrud.ui.CustomerActivityCommunication
+import br.com.samueltobias.customercrud.domain.model.Customer
+import br.com.samueltobias.customercrud.view.CustomerActivityCommunication
 import com.google.android.material.textfield.TextInputEditText
 
 class CustomerFormActivity : AppCompatActivity(), CustomerActivityCommunication {
@@ -59,7 +59,7 @@ class CustomerFormActivity : AppCompatActivity(), CustomerActivityCommunication 
     }
 
     private fun redirectToList(customer: Customer) {
-        val intent = Intent().putExtra(CustomerActivityCommunication.INTENT_EXTRA_CUSTOMER_SERIALIZED, customer)
+        val intent = intent.putExtra(CustomerActivityCommunication.INTENT_EXTRA_CUSTOMER_SERIALIZED, customer)
         setResult(CustomerActivityCommunication.CUSTUMER_ADD_RESULT_CODE, intent)
         finish()
     }

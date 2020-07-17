@@ -1,4 +1,4 @@
-package br.com.samueltobias.customercrud.model
+package br.com.samueltobias.customercrud.domain.model
 
 import androidx.room.Entity
 import androidx.room.Ignore

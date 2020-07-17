@@ -1,16 +1,15 @@
-package br.com.samueltobias.customercrud.repository
+package br.com.samueltobias.customercrud.data.repository
 
-import br.com.samueltobias.customercrud.asynctask.Callback
-import br.com.samueltobias.customercrud.asynctask.FetchCustomersTask
-import br.com.samueltobias.customercrud.database.dao.CustomerDao
-import br.com.samueltobias.customercrud.model.Customer
+import br.com.samueltobias.customercrud.data.repository.asynctask.Callback
+import br.com.samueltobias.customercrud.data.repository.asynctask.FetchCustomersTask
+import br.com.samueltobias.customercrud.data.database.dao.CustomerDao
+import br.com.samueltobias.customercrud.domain.model.Customer
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.spyk
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.ArgumentMatchers
-import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
 import java.util.*
 
@@ -24,7 +23,7 @@ class CustomerRepositoryTest {
         val customerDaoMock = mockk<CustomerDao>()
         val taskMock = mockk<FetchCustomersTask>()
         every { taskMock.execute() } returns null
-        val customerRepository = Mockito.spy(CustomerRepository(customerDaoMock))
+        val customerRepository = spyk(CustomerRepository(customerDaoMock))
         every { customerRepository.getCustomers(any()) } answers {
             lastArg<Callback<List<Customer>>>().onFinish(customers)
         }

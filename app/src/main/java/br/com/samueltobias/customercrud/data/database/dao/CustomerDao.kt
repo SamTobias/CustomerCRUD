@@ -1,17 +1,18 @@
-package br.com.samueltobias.customercrud.database.dao
+package br.com.samueltobias.customercrud.data.database.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import br.com.samueltobias.customercrud.model.Customer
+import br.com.samueltobias.customercrud.domain.model.Customer
 
 @Dao
 interface CustomerDao {
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun save(customer: Customer)
 
     @Query(value = "SELECT * FROM customer")
-    fun getAll(): List<Customer>
+    suspend fun getAll(): List<Customer>
 
     @Query(value = "SELECT * FROM customer WHERE id = :id")
     fun get(id: Long): Customer?

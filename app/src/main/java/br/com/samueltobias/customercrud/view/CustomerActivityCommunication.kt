@@ -1,4 +1,4 @@
-package br.com.samueltobias.customercrud.ui
+package br.com.samueltobias.customercrud.view
 
 interface CustomerActivityCommunication {
     companion object {
