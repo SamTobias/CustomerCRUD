@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.RecyclerView
 import br.com.samueltobias.customercrud.R
 import br.com.samueltobias.customercrud.data.database.AppDatabase
 import br.com.samueltobias.customercrud.data.repository.CustomerRepository
@@ -13,8 +12,7 @@ import br.com.samueltobias.customercrud.domain.model.Customer
 import br.com.samueltobias.customercrud.view.CustomerActivityCommunication
 import br.com.samueltobias.customercrud.view.OnClickListener
 import br.com.samueltobias.customercrud.view.customerform.CustomerFormActivity
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-import kotlinx.coroutines.GlobalScope
+import kotlinx.android.synthetic.main.activity_customer_list.*
 import kotlinx.coroutines.launch
 
 class CustomerListActivity : AppCompatActivity(), CustomerActivityCommunication {
@@ -47,7 +45,6 @@ class CustomerListActivity : AppCompatActivity(), CustomerActivityCommunication 
     }
 
     private fun setupList() {
-        val recyclerView = findViewById<RecyclerView>(R.id.customer_list_recycler_view)
         customerListAdapter = CustomerListAdapter(this@CustomerListActivity, object : OnClickListener {
             override fun onClick(position: Int) {
                 val intent = Intent(this@CustomerListActivity, CustomerFormActivity::class.java)
@@ -55,7 +52,7 @@ class CustomerListActivity : AppCompatActivity(), CustomerActivityCommunication 
                 startActivityForResult(intent, CustomerActivityCommunication.CUSTOMER_EDIT_REQUEST_CODE)
             }
         })
-        recyclerView.adapter = customerListAdapter
+        customer_list_recycler_view.adapter = customerListAdapter
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -99,7 +96,6 @@ class CustomerListActivity : AppCompatActivity(), CustomerActivityCommunication 
     }
 
     private fun setupFabButton() {
-        val floatingActionButton = findViewById<ExtendedFloatingActionButton>(R.id.customer_list_fab_add)
-        floatingActionButton.setOnClickListener { startActivityForResult(Intent(this@CustomerListActivity, CustomerFormActivity::class.java), CustomerActivityCommunication.CUSTOMER_ADD_REQUEST_CODE) }
+        customer_list_fab_add.setOnClickListener { startActivityForResult(Intent(this@CustomerListActivity, CustomerFormActivity::class.java), CustomerActivityCommunication.CUSTOMER_ADD_REQUEST_CODE) }
     }
 }
