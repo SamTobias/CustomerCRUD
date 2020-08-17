@@ -11,7 +11,7 @@ buildscript {
 
             credentials {
                 username "AZURE_ARTIFACTS"
-                password ${azureAccessToken}
+                password "${azureAccessToken}"
             }
         }
 

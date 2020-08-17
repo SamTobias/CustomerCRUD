@@ -57,7 +57,7 @@ publishing {
             name 'BRHBS0709'
             credentials {
                 username "AZURE_ARTIFACTS"
-                password ${azureAccessToken}
+                password "${azureAccessToken}"
             }
         }
     }
