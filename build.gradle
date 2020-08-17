@@ -21,6 +21,8 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         def nav_version = "2.3.0"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.8"
+        classpath "org.jacoco:org.jacoco.core:0.8.5"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -34,6 +36,8 @@ allprojects {
         
     }
 }
+
+apply from: "$project.rootDir/sonar.gradle"
 
 task clean(type: Delete) {
     delete rootProject.buildDir
