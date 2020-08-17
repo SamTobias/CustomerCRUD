@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: "androidx.navigation.safeargs.kotlin"
+apply plugin: 'maven-publish'
 
 android {
     compileSdkVersion 29
@@ -34,12 +35,40 @@ android {
     kotlinOptions { jvmTarget = "1.8" }
 }
 
+
+task sourceJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier "sources"
+}
+
+publishing {
+    publications {
+        customerCrud(MavenPublication) {
+            groupId 'br.com.samueltobias'
+            artifactId 'customercrud'
+            version '1.0.0'
+            artifact './build/outputs/apk/debug/app-debug.apk'
+        }
+    }
+
+    repositories {
+        maven {
+            url 'https://pkgs.dev.azure.com/BRHBS0709/_packaging/BRHBS0709/maven/v1'
+            name 'BRHBS0709'
+            credentials {
+                username "AZURE_ARTIFACTS"
+                password ${azureAccessToken}
+            }
+        }
+    }
+}
+
 repositories {
     dependencies {
         implementation fileTree(dir: 'libs', include: ['*.jar'])
 
         // Compatibility
-        implementation 'androidx.appcompat:appcompat:1.1.0'
+        implementation 'androidx.appcompat:appcompat:1.2.0'
 
         // Layout
         implementation 'androidx.constraintlayout:constraintlayout:2.0.0-rc1'

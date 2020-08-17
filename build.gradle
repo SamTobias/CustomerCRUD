@@ -5,7 +5,16 @@ buildscript {
     repositories {
         google()
         jcenter()
-        
+        maven {
+            url 'https://pkgs.dev.azure.com/BRHBS0709/_packaging/BRHBS0709/maven/v1'
+            name 'BRHBS0709'
+
+            credentials {
+                username "AZURE_ARTIFACTS"
+                password ${azureAccessToken}
+            }
+        }
+
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.0.1'
