@@ -16,9 +16,11 @@ import br.com.samueltobias.customercrud.domain.model.Customer
 import br.com.samueltobias.customercrud.view.CustomerCommunication
 import br.com.samueltobias.customercrud.view.OnClickListener
 import br.com.samueltobias.customercrud.view.adapter.CustomerListAdapter
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_customer_list.*
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class CustomerListFragment : Fragment(), CustomerCommunication {
     private lateinit var navController: NavController
     private lateinit var repository: CustomerRepository

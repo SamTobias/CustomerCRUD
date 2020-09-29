@@ -8,15 +8,15 @@ import java.io.Serializable
 data class Customer(
         @PrimaryKey(autoGenerate = true)
         val id: Long,
-        var name: String?,
-        var phone: String?
+        val name: String?,
+        val phone: String?
 ) : Serializable {
 
     val isValid: Boolean
         get() {
-            if (name == null || name!!.isEmpty()) {
+            if (name == null || name.isEmpty()) {
                 return false
             }
-            return !(phone == null || phone!!.isEmpty())
+            return !(phone == null || phone.isEmpty())
         }
 }

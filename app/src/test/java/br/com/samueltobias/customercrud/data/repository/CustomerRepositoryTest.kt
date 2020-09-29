@@ -6,11 +6,8 @@ import io.mockk.*
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.junit.MockitoJUnitRunner
 import java.util.*
 
-@RunWith(MockitoJUnitRunner::class)
 class CustomerRepositoryTest {
     @Test
     fun shouldGetListOfCustomers() = runBlocking {
