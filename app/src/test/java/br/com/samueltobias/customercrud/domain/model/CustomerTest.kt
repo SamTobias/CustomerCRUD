@@ -15,4 +15,10 @@ class CustomerTest {
         val customer = Customer(1, "", "")
         Assert.assertFalse(customer.isValid)
     }
+
+    @Test
+    fun shouldReturnInvalidCustomer_WhenAllFieldsAreNull() {
+        val customer = Customer(1, null, null)
+        Assert.assertFalse(customer.isValid)
+    }
 }

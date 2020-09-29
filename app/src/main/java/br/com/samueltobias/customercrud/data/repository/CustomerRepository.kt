@@ -6,11 +6,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class CustomerRepository(private val customerDao: CustomerDao) {
-    suspend fun save(customer: Customer)  = withContext(Dispatchers.IO) {
+    suspend fun save(customer: Customer) = withContext(Dispatchers.IO) {
         customerDao.save(customer)
     }
 
-    suspend fun update(customer: Customer)  = withContext(Dispatchers.IO) {
+    suspend fun update(customer: Customer) = withContext(Dispatchers.IO) {
         customerDao.update(customer)
     }
 
