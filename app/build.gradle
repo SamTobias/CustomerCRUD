@@ -44,27 +44,27 @@ task sourceJar(type: Jar) {
     classifier "sources"
 }
 
-publishing {
-    publications {
-        customerCrud(MavenPublication) {
-            groupId 'br.com.samueltobias'
-            artifactId 'customercrud'
-            version '1.0.0'
-            artifact './build/outputs/apk/debug/app-debug.apk'
-        }
-    }
-
-    repositories {
-        maven {
-            url 'https://pkgs.dev.azure.com/BRHBS0709/_packaging/BRHBS0709/maven/v1'
-            name 'BRHBS0709'
-            credentials {
-                username "AZURE_ARTIFACTS"
-                password "${azureAccessToken}"
-            }
-        }
-    }
-}
+//publishing {
+//    publications {
+//        customerCrud(MavenPublication) {
+//            groupId 'br.com.samueltobias'
+//            artifactId 'customercrud'
+//            version '1.0.0'
+//            artifact './build/outputs/apk/debug/app-debug.apk'
+//        }
+//    }
+//
+//    repositories {
+//        maven {
+//            url 'https://pkgs.dev.azure.com/BRHBS0709/_packaging/BRHBS0709/maven/v1'
+//            name 'BRHBS0709'
+//            credentials {
+//                username "AZURE_ARTIFACTS"
+//                password "${azureAccessToken ?: ""}"
+//            }
+//        }
+//    }
+//}
 
 repositories {
     dependencies {
@@ -74,7 +74,7 @@ repositories {
         implementation 'androidx.appcompat:appcompat:1.2.0'
 
         // Layout
-        implementation 'androidx.constraintlayout:constraintlayout:2.0.0-rc1'
+        implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
         implementation 'com.google.android.material:material:1.3.0-alpha02'
 
         // Fragment
@@ -84,13 +84,13 @@ repositories {
         // Kotlin
         implementation "androidx.core:core-ktx:1.3.1"
         implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-        implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.3.0-alpha06"
+        implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.3.0-alpha07"
 
         // Test
         testImplementation 'io.mockk:mockk:1.10.0'
         testImplementation 'junit:junit:4.13'
-        androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-        androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+        androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+        androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
         testImplementation 'org.mockito:mockito-core:3.3.3'
         androidTestUtil 'androidx.test:orchestrator:1.2.0'
 
